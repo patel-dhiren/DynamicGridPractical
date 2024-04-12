@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -54,21 +53,23 @@ class GridListAdapter(
             if (position == nextSelected) {
                 val remainingIndices = (0 until gridSize).filter { it !in selectedPositions }
 
-                if (remainingIndices.isNotEmpty()) {
+                if (remainingIndices.isNotEmpty() && remainingIndices.size != 1) {
                     nextSelected = remainingIndices[random.nextInt(remainingIndices.size)]
                     selectedPositions.add(nextSelected)
                     notifyItemChanged(nextSelected)
                 } else {
                     Log.d("LAST", "onBindViewHolder: Last Item Clicked")
-                    //Toast.makeText(context, "Last item clicked", Toast.LENGTH_SHORT).show()
                     colorIndex++
-                    if (colorIndex <= 2){
+                    if (colorIndex <= 2) {
                         selectedColor = getBackgroundColor(colorIndex)
                         selectedPositions.clear()
-                        nextSelected = random.nextInt(gridSize - 1)
+                        //nextSelected = random.nextInt(gridSize - 1)
+                        nextSelected = remainingIndices[0]
                         selectedPositions.add(nextSelected)
                         notifyItemChanged(nextSelected)
-                    }else{
+                    } else {
+                        nextSelected = remainingIndices[0]
+                        notifyItemChanged(nextSelected)
                         onClick()
                     }
                 }
