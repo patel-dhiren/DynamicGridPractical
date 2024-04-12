@@ -68,8 +68,6 @@ class GridListAdapter(
                         selectedPositions.add(nextSelected)
                         notifyItemChanged(nextSelected)
                     } else {
-                        nextSelected = remainingIndices[0]
-                        notifyItemChanged(nextSelected)
                         onClick()
                     }
                 }
